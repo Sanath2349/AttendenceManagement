@@ -38,11 +38,11 @@ export default function Register() {
     }
 
     // Password validation
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordPattern.test(formData.password)) {
-      newErrors.password =
-        "Password must be at least 8 characters long and include a number";
-    }
+    // const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    // if (!passwordPattern.test(formData.password)) {
+    //   newErrors.password =
+    //     "Password must be at least 8 characters long and include a number";
+    // }
 
     // Confirm Password validation
     if (formData.password !== formData.confirmPassword) {
