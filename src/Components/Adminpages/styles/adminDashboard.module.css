@@ -1,0 +1,29 @@
+.AdminDashboard{
+    background-color: #e9eff5;
+    height: 100vh;
+    display: flex;
+    gap: 20px;
+}
+
+.AdminDashboard .sidebar{
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+.dashboardBoxes{
+    height: 200px;
+    /* background-color: aqua; */
+    width: 100%;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.box{
+    width: 250px;
+    height: 150px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 2px 1px 6px rgb(162, 158, 158);
+}

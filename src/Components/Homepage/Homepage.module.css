@@ -96,11 +96,10 @@
   position: absolute;
 }
 .info h2 {
-  width: 50%;
-
+  /* width: 50%; */
   height: 113px;
   top: 346px;
-  left: 350px;
+  left: 550px;
   gap: 0px;
   opacity: 0px;
   font-family: Roboto;
