@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import logo from "../../assests/logo.png";
-import { useNavigate } from "react-router";
 import styles from "../register/Register.module.css"; // Import your CSS module
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // For password visibility icons
 
 export default function Register() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/login");
-  };
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -47,7 +40,8 @@ export default function Register() {
     // Password validation
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     if (!passwordPattern.test(formData.password)) {
-      newErrors.password = "Password must be at least 8 characters long and include a number";
+      newErrors.password =
+        "Password must be at least 8 characters long and include a number";
     }
 
     // Confirm Password validation
@@ -84,18 +78,6 @@ export default function Register() {
 
   return (
     <div>
-      <header className={styles.header}>
-        <img src={logo} alt="Company Logo" className={styles.logo} />
-        <div className={styles.authlinks}>
-          <a href="/register" className={styles.registerlink}>
-            New user? Register
-          </a>
-          <button className={styles.loginbtn} onClick={handleClick}>
-            LOGIN
-          </button>
-        </div>
-      </header>
-
       <div className={styles.registercontainer}>
         <form className={styles.registerform} onSubmit={handleSubmit}>
           <h2>Register</h2>
@@ -113,7 +95,9 @@ export default function Register() {
             onChange={handleChange}
             required
           />
-          {errors.fullName && <p className={styles.errorMessage}>{errors.fullName}</p>}
+          {errors.fullName && (
+            <p className={styles.errorMessage}>{errors.fullName}</p>
+          )}
 
           <div className={styles.flex}>
             <input
@@ -124,7 +108,6 @@ export default function Register() {
               value={formData.dob}
               onChange={handleChange}
               required
-             
             />
             {errors.dob && <p className={styles.errorMessage}>{errors.dob}</p>}
 
@@ -134,14 +117,15 @@ export default function Register() {
               value={formData.gender}
               onChange={handleChange}
               required
-             
             >
               <option value="">Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
-            {errors.gender && <p className={styles.errorMessage}>{errors.gender}</p>}
+            {errors.gender && (
+              <p className={styles.errorMessage}>{errors.gender}</p>
+            )}
           </div>
 
           <input
@@ -152,9 +136,10 @@ export default function Register() {
             value={formData.email}
             onChange={handleChange}
             required
-           
           />
-          {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
+          {errors.email && (
+            <p className={styles.errorMessage}>{errors.email}</p>
+          )}
 
           <div className={styles.passwordGroup}>
             <div className={styles.passwordcontainer}>
@@ -165,7 +150,6 @@ export default function Register() {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-               
               />
               <span
                 className={styles.togglepassword}
@@ -174,7 +158,9 @@ export default function Register() {
                 {passwordVisible ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.password && <p className={styles.errorMessage}>{errors.password}</p>}
+            {errors.password && (
+              <p className={styles.errorMessage}>{errors.password}</p>
+            )}
 
             <div className={styles.passwordcontainer}>
               <input
@@ -184,11 +170,12 @@ export default function Register() {
                 placeholder="Confirm Password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                
               />
               <span
                 className={styles.togglepassword}
-                onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+                onClick={() =>
+                  setConfirmPasswordVisible(!confirmPasswordVisible)
+                }
               >
                 {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -205,16 +192,16 @@ export default function Register() {
             placeholder="Contact No."
             value={formData.contact}
             onChange={handleChange}
-         
           />
-          {errors.contact && <p className={styles.errorMessage}>{errors.contact}</p>}
+          {errors.contact && (
+            <p className={styles.errorMessage}>{errors.contact}</p>
+          )}
 
           <select
             name="domain"
             className={errors.domain ? styles.error : ""}
             value={formData.domain}
             onChange={handleChange}
-         
           >
             <option value="">Select Domain</option>
             <option value="web dev">Web Developer</option>
@@ -223,7 +210,9 @@ export default function Register() {
             <option value="testing">Testing</option>
             <option value="java">Java</option>
           </select>
-          {errors.domain && <p className={styles.errorMessage}>{errors.domain}</p>}
+          {errors.domain && (
+            <p className={styles.errorMessage}>{errors.domain}</p>
+          )}
 
           <button type="submit">Register</button>
 

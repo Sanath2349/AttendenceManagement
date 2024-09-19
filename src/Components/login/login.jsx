@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../assests/logo.png";
 import styles from "../login/login.module.css"
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; 
@@ -56,16 +55,6 @@ export default function Login() {
 
   return (
     <div>
-      <header className={styles.header}>
-        <img src={logo} alt="Company Logo" className={styles.logo} />
-        <div className={styles.authlinks}>
-          <a href="/register" className={styles.registerlink}>
-            New user? Register
-          </a>
-          <button className={styles.loginbtn}>LOGIN</button>
-        </div>
-      </header>
-
       <div className={styles.logincontainer}>
         <div className={styles.loginbox}>
           <h1 className={styles.logintitle}>Login</h1>
@@ -73,7 +62,6 @@ export default function Login() {
           <p className={styles.instruction}>
             Please enter your Attendance credentials.
           </p>
-
           <form onSubmit={handleSubmit}>
             {/* Email Field */}
             <div className={styles.formgroup}>
