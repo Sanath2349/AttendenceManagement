@@ -1,0 +1,176 @@
+.header {
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    height: 97px;
+    gap: 0px;
+    opacity: 0px;
+  }
+  
+  .logo {
+    width: 283px;
+    height: 70px;
+    margin: 5px;
+  }
+  
+  .authlinks {
+    display: flex;
+    align-items: center;
+    margin-left: 53%;
+    width: 500px;
+    font-family: "Roboto", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 28.13px;
+    text-align: left;
+  }
+  
+  .registerlink {
+    margin-right: 70px;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    position: relative;
+  }
+  
+  .registerlink::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px; /* Adjust the thickness of the underline */
+    bottom: -2px; /* Position the underline */
+    left: 0;
+    background-color: rgb(9, 155, 240);
+    transition: width 0.3s ease-in-out; /* Animation for underline */
+  }
+  
+  .registerlink:hover::after {
+    width: 100%; /* Full width of the link on hover */
+  }
+  
+  .loginbtn {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  /* General Styles */
+.logincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background-color: #f7f7f7;
+  }
+  
+  .loginbox {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+  }
+  
+  .logintitle {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #222;
+  }
+  
+  .welcomemessage, .instruction {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .formgroup {
+    margin-bottom: 20px;
+  }
+  
+  .formgroup input[type="email"],
+  .formgroup input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .formgroup input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .loginbutton {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .loginbutton:hover {
+    background-color: #444;
+  }
+  
+  .loginfooter {
+    margin-top: 20px;
+  }
+  .loginfooter p {
+    margin-top: 30px;
+  }
+  .loginfooter a {
+  color: blue;
+  }
+  
+  .forgotpassword {
+    color: #111111;
+    font-size: 14px;
+    text-decoration: none;
+   margin-bottom: 60px;
+   padding: 20px;
+  }
+  
+  .registerlink {
+    color: #0b0c0c;
+    text-decoration: none;
+    
+
+  }
+
+  .togglepassword {
+    position: absolute;
+    top: 53.5%;
+    right: 40%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    
+
+  }
+
+  .togglepassword svg {
+    color: #080808;
+   
+  }
+  
+
+  .pass{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
