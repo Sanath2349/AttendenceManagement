@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AdminSidebar from '../AdminSidebar';
 import styles from "../styles/EmpOverview.module.css";
 
-const EmployeeOverview = () => {
+const EmployeesOverview = () => {
   const [employees, setEmployees] = useState([
     { id: '001', name: 'John Doe', phone: '1234567890', email: 'john@example.com', joiningDate: '2023-01-15', status: 'Active' },
     { id: '002', name: 'Jane Smith', phone: '0987654321', email: 'jane@example.com', joiningDate: '2022-11-03', status: 'Active' },
@@ -69,4 +69,4 @@ const EmployeeOverview = () => {
   );
 };
 
-export default EmployeeOverview;
+export default EmployeesOverview;
