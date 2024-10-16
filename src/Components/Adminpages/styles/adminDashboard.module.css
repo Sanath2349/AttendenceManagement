@@ -1,29 +1,150 @@
-.AdminDashboard{
-    background-color: #e9eff5;
-    height: 100vh;
-    display: flex;
-    gap: 20px;
+.AdminDashboard {
+  background-color: #e9eff5;
+  height: 100vh;
+  display: flex;
+  gap: 20px;
 }
 
-.AdminDashboard .sidebar{
-    padding-top: 20px;
-    padding-left: 10px;
+.AdminDashboard .sidebar {
+  padding-top: 20px;
+  padding-left: 10px;
 }
 
-.dashboardBoxes{
-    height: 200px;
-    /* background-color: aqua; */
-    width: 100%;
-    display: flex;
-    gap: 50px;
-    align-items: center;
-    padding: 0 20px;
+.dashboardBoxes {
+  height: 200px;
+  /* background-color: aqua; */
+  width: 100%;
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  padding: 0 20px;
 }
 
-.box{
-    width: 250px;
-    height: 150px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 2px 1px 6px rgb(162, 158, 158);
+.box {
+  width: 250px;
+  height: 150px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 2px 1px 6px rgb(162, 158, 158);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 10px;
+}
+
+.box h3 {
+  padding: 0 10px;
+  font-size: 25px;
+}
+
+.empcount img {
+  width: 40px;
+  height: 35px;
+  color: blue;
+}
+
+.empcount {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.empcount span {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.adminTable {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tableControls {
+  display: flex;
+  gap: 10px;
+}
+
+.searchInput {
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.dateButton,
+.viewButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.dateButton {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.viewButton {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.attendanceTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.attendanceTable th,
+.attendanceTable td {
+  padding: 12px;
+  text-align: left;
+}
+
+.attendanceTable th {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.Workfromoffice {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.Absent {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.Latearrival {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.Workfromhome {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: left;
+  color: #6b7280;
+  font-size: 0.875rem;
 }
