@@ -9,6 +9,7 @@ import Employeedashboard from "./Components/employeepages/Employeedashboard";
 
 import Employeepunchout from "./Components/employeepages/Employeepunchout";
 import Employeeoverview from "./Components/employeepages/Employeeoverview";
+import EmployeesOverview from "./Components/Adminpages/EmployeeOverview/EmployeeOverview";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admindashboard" element={<AdminDashboard/>}/>
-        <Route path="/employeedashboard" element={<Employeedashboard/>}/>
+        <Route path="/employeesdashboard" element={<Employeedashboard/>}/>
         <Route path="/employeepunchout" element={<Employeepunchout/>}/>
         <Route path="/employeeoverview" element={<Employeeoverview/>}/>
       </Routes>
