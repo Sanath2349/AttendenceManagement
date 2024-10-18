@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 import styles from "../register/Register.module.css"; // Import your CSS module
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // For password visibility icons
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import {
+  registerFailure,
+  registerSuccess,
+} from "../../redux/slices/registerSlice";
 
 export default function Register() {
-
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     dob: "",
     gender: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    contact: "",
+    confirm_password: "",
+    mobile_number: "",
     domain: "",
   });
 
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const validateForm = () => {
     const newErrors = {};
 
     // Full Name validation
-    if (!formData.fullName) newErrors.fullName = "Full Name is required";
+    if (!formData.name) newErrors.name = "Full Name is required";
 
     // Date of Birth validation
     if (!formData.dob) newErrors.dob = "Date of Birth is required";
@@ -45,14 +51,14 @@ export default function Register() {
     // }
 
     // Confirm Password validation
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+    if (formData.password !== formData.confirm_password) {
+      newErrors.confirm_password = "Passwords do not match";
     }
 
     // Contact validation
     const contactPattern = /^\d{10}$/;
-    if (!contactPattern.test(formData.contact)) {
-      newErrors.contact = "Enter a valid 10-digit phone number";
+    if (!contactPattern.test(formData.mobile_number)) {
+      newErrors.mobile_number = "Enter a valid 10-digit phone number";
     }
 
     // Domain validation
@@ -71,8 +77,33 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form Data:", formData);
-      // Submit the form here, or you can add further actions.
+      // Modify the dob format
+      const updatedFormData = {
+        ...formData,
+        dob: formData.dob + "T00:00:00", // Add time component to the date
+      };
+
+      console.log("Form Data:", updatedFormData);
+      axios
+        .post(
+          `http://52.7.177.12:8000/create_user?gender=${updatedFormData.gender}&domain=${updatedFormData.domain}`,
+          updatedFormData
+        )
+        .then((res) => {
+          console.log("register success", res.data);
+          dispatch(
+            registerSuccess({
+              ...res.data,
+              role: res.data.role, // Assuming the API returns the user role during registration
+            })
+          );
+        })
+        .catch((e) => {
+          console.error("error register", e);
+          dispatch(
+            registerFailure(e.response?.data?.message || "Registration failed")
+          );
+        });
     }
   };
 
@@ -88,16 +119,14 @@ export default function Register() {
 
           <input
             type="text"
-            name="fullName"
+            name="name"
             className={errors.fullName ? styles.error : ""}
             placeholder="Enter Full Name"
-            value={formData.fullName}
+            value={formData.name}
             onChange={handleChange}
             required
           />
-          {errors.fullName && (
-            <p className={styles.errorMessage}>{errors.fullName}</p>
-          )}
+          {errors.name && <p className={styles.errorMessage}>{errors.name}</p>}
 
           <div className={styles.flex}>
             <input
@@ -165,10 +194,10 @@ export default function Register() {
             <div className={styles.passwordcontainer}>
               <input
                 type={confirmPasswordVisible ? "text" : "password"}
-                name="confirmPassword"
-                className={errors.confirmPassword ? styles.error : ""}
+                name="confirm_password"
+                className={errors.confirm_password ? styles.error : ""}
                 placeholder="Confirm Password"
-                value={formData.confirmPassword}
+                value={formData.confirm_password}
                 onChange={handleChange}
               />
               <span
@@ -180,21 +209,21 @@ export default function Register() {
                 {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.confirmPassword && (
-              <p className={styles.errorMessage}>{errors.confirmPassword}</p>
+            {errors.confirm_password && (
+              <p className={styles.errorMessage}>{errors.confirm_password}</p>
             )}
           </div>
 
           <input
             type="text"
-            name="contact"
+            name="mobile_number"
             className={errors.contact ? styles.error : ""}
             placeholder="Contact No."
-            value={formData.contact}
+            value={formData.mobile_number}
             onChange={handleChange}
           />
-          {errors.contact && (
-            <p className={styles.errorMessage}>{errors.contact}</p>
+          {errors.mobile_number && (
+            <p className={styles.errorMessage}>{errors.mobile_number}</p>
           )}
 
           <select

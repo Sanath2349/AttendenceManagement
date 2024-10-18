@@ -10,11 +10,7 @@ const EmployeesOverview = () => {
     { id: '004', name: 'Alice Brown', phone: '5566778899', email: 'alice@example.com', joiningDate: '2022-09-01', status: 'Active' },
   ]);
 
-  const toggleStatus = (id) => {
-    setEmployees(employees.map(emp => 
-      emp.id === id ? {...emp, status: emp.status === 'Active' ? 'Deactive' : 'Active'} : emp
-    ));
-  };
+  
 
   return (
     <div className={styles.EmployeeOverview}>
@@ -22,7 +18,7 @@ const EmployeesOverview = () => {
         <AdminSidebar />
       </div>
       <div className={styles.contentArea}>
-        <h1 className={styles.title}>Employee Overview</h1>
+        <h1 className={styles.title}>Attendence Overview</h1>
         <div className={styles.tableContainer}>
           <table className={styles.employeeTable}>
             <thead>
@@ -33,7 +29,7 @@ const EmployeesOverview = () => {
                 <th>Email</th>
                 <th>Joining Date</th>
                 <th>Status</th>
-                <th>Action</th>
+               
               </tr>
             </thead>
             <tbody>
@@ -49,16 +45,7 @@ const EmployeesOverview = () => {
                       {employee.status}
                     </span>
                   </td>
-                  <td>
-                    <label className={styles.switch}>
-                      <input
-                        type="checkbox"
-                        checked={employee.status === 'Active'}
-                        onChange={() => toggleStatus(employee.id)}
-                      />
-                      <span className={styles.slider}></span>
-                    </label>
-                  </td>
+               
                 </tr>
               ))}
             </tbody>
