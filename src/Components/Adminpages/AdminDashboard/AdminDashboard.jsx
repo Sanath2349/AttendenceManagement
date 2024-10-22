@@ -1,50 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminSidebar from "../AdminSidebar";
 import styles from "../styles/adminDashboard.module.css";
 import group from "../../../assests/Admin/ic--baseline-people.svg";
 import ontime from "../../../assests/Admin/material-symbols--avg-time (1).svg";
 import late from "../../../assests/Admin/pajamas--time-out.svg";
 import absent from "../../../assests/Admin/mdi--weather-time.svg";
+import axios from "axios";
 
 const AdminDashboard = () => {
-  const attendanceData = [
-    {
-      id: "2341421",
-      employee: "Ahmed Rashdan",
-      Domain: "web developer",
-      date: "29 July 2023",
-      status: "Work from office",
-      checkIn: "09:00",
-      checkOut: "18:00",
-    },
-    {
-      id: "3411421",
-      employee: "Ali Alhamdan",
-      Domain: "DevOps",
-      date: "29 July 2023",
-      status: "Absent",
-      checkIn: "00:00",
-      checkOut: "00:00",
-    },
-    {
-      id: "2341121",
-      employee: "Mona Alghafar",
-      Domain: "Python ",
-      date: "29 July 2023",
-      status: "Late arrival",
-      checkIn: "10:30",
-      checkOut: "18:00",
-    },
-    {
-      id: "2341421",
-      employee: "Moustafa Adel",
-      Domain: "Testing",
-      date: "29 July 2023",
-      status: "Work from home",
-      checkIn: "09:00",
-      checkOut: "18:00",
-    },
-  ];
+  const [empData, setEmpData] = useState([]);
+ 
+
+  useEffect(() => {
+    axios
+      .get("http://52.7.177.12:8000/get all users")
+      .then((res) => {
+        console.log("employee fetch success", res.data);
+        setEmpData(res.data);
+      })
+      .catch((e) => {
+        console.error("error fetch employees", e);
+      });
+  }, []);
+
+
+ const toggleStatus = ()=>{
+
+ }
 
   return (
     <div className={styles.AdminDashboard}>
@@ -55,7 +37,7 @@ const AdminDashboard = () => {
         <div className={styles.dashboardBoxes}>
           <div className={styles.box}>
             <div className={styles.empcount}>
-              <span>80</span>
+              <span>{empData.length}</span>
               <img src={group} alt="img" />
             </div>
             <h3>Total Employees</h3>
@@ -84,7 +66,7 @@ const AdminDashboard = () => {
         </div>
         <div className={styles.adminTable}>
           <div className={styles.tableHeader}>
-            <h2>Attendance Overview</h2>
+            <h2>Employee Overview</h2>
             <div className={styles.tableControls}>
               <input
                 type="text"
@@ -101,30 +83,29 @@ const AdminDashboard = () => {
                 <th>ID</th>
                 <th>Employee</th>
                 <th>Domain</th>
-                <th>Date</th>
+                <th>Creation Date</th>
                 <th>Status</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {attendanceData.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
-                  <td>{row.employee}</td>
-                  <td>{row.Domain}</td>
-                  <td>{row.date}</td>
+              {empData.map((emp) => (
+                <tr key={emp.employee_id}>
+                  <td>{emp.employee_id}</td>
+                  <td>{emp.name}</td>
+                  <td>{emp.Domain}</td>
+                  <td>{emp.creation_date_time}</td>
+                  <td>{emp.status}</td>
                   <td>
-                    <span
-                      className={`${styles.status} ${
-                        styles[row.status.replace(/\s+/g, "")]
-                      }`}
-                    >
-                      {row.status}
-                    </span>
+                    <label className={styles.switch}>
+                      <input
+                        type="checkbox"
+                        checked={emp.status === "Active"}
+                        onChange={() => toggleStatus(emp.id)}
+                      />
+                      <span className={styles.slider}></span>
+                    </label>
                   </td>
-                  <td>{row.checkIn}</td>
-                  <td>{row.checkOut}</td>
                 </tr>
               ))}
             </tbody>

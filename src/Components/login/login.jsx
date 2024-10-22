@@ -1,34 +1,62 @@
-import React from "react";
-import styles from "../login/login.module.css"
+import React, { useEffect } from "react";
+import styles from "../login/login.module.css";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginFailure, loginSuccess } from "../../redux/slices/userSlice";
+import { loadPunchStatus } from "../../redux/slices/employeeSlice";
 
 export default function Login() {
   // State to handle form inputs
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [rememberMe, setRememberMe] = useState(false);
-
   const [passwordVisible, setPasswordVisible] = useState(false);
- 
+  const [userType, setUserType] = useState("employee"); // New state for user type
 
   // State to handle form errors
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser: registeredUser } = useSelector(
+    (state) => state.register || {}
+  );
+  // const { currentUser, isAuthenticated } = useSelector((state) => state.user || {});
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+    if (savedEmail) {
+      setFormData((prevState) => ({
+        ...prevState,
+        email: savedEmail,
+      }));
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   // Validation function
   const validateForm = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!email) {
+    if (!formData.email) {
       errors.email = "Email is required";
-    } else if (!emailRegex.test(email)) {
+    } else if (!emailRegex.test(formData.email)) {
       errors.email = "Invalid email address";
     }
 
-    if (!password) {
+    if (!formData.password) {
       errors.password = "Password is required";
-    } else if (password.length < 6) {
+    } else if (formData.password.length < 6) {
       errors.password = "Password must be at least 6 characters";
     }
 
@@ -42,16 +70,37 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate form before submitting
     if (validateForm()) {
-      const formData = {
-        email,
-        password,
-        rememberMe,
-      };
-      console.log("Form Data:", formData); // Log form data to console
+      const apiEndpoint = "http://52.7.177.12:8000/User_login";
+
+      axios
+        .post(apiEndpoint, formData)
+        .then((res) => {
+          console.log(`${userType} login success`, res.data);
+          dispatch(loginSuccess(res.data));
+
+          // Load punch status for the logged-in user
+          dispatch(loadPunchStatus({ userId: res.data.user_id }));
+
+          // Navigate based on user type
+          if (res.data.role === "admin") {
+            navigate("/admindashboard");
+          } else {
+            navigate("/employeedashboard");
+          }
+        })
+        .catch((e) => {
+          console.error("error login", e);
+          dispatch(loginFailure(e.response?.data?.message || "Login Failed"));
+        });
     }
   };
+
+  if (rememberMe) {
+    localStorage.setItem("email", formData.email);
+  } else {
+    localStorage.removeItem("email");
+  }
 
   return (
     <div>
@@ -67,9 +116,10 @@ export default function Login() {
             <div className={styles.formgroup}>
               <input
                 type="email"
+                name="email"
                 placeholder="Enter Email ID"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
               {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -80,19 +130,22 @@ export default function Login() {
               <input
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
                 className={styles.pass}
               />
 
-                <span
+              <span
                 className={styles.togglepassword}
                 onClick={() => setPasswordVisible(!passwordVisible)}
               >
                 {passwordVisible ? <FaEyeSlash /> : <FaEye />}
               </span>
-              {errors.password && <p className={styles.error}>{errors.password}</p>}
+              {errors.password && (
+                <p className={styles.error}>{errors.password}</p>
+              )}
             </div>
 
             {/* Remember Me Checkbox */}
@@ -119,7 +172,7 @@ export default function Login() {
             <p>
               Don't you have an account?{" "}
               <a href="/register" className={styles.registerlink}>
-                Register 
+                Register
               </a>
             </p>
           </div>

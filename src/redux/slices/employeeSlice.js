@@ -1,49 +1,45 @@
-import { createSlice } from "@reduxjs/toolkit";
+// src/redux/slices/employeeSlice.js
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  list: [],
-  loading: false,
-  error: null,
+  punchStatus: null,
+  lastPunchInDate: null,
 };
 
 const employeeSlice = createSlice({
-  name: "employees",
+  name: 'employees',
   initialState,
   reducers: {
-    fetchEmployeesStart: (state) => {
-      state.loading = true;
+    punchIn: (state, action) => {
+      const { userId } = action.payload;
+      const today = new Date().toDateString();
+      state.punchStatus = 'punchedIn';
+      state.lastPunchInDate = today;
+      localStorage.setItem(`punchStatus_${userId}`, 'punchedIn');
+      localStorage.setItem(`lastPunchInDate_${userId}`, today);
     },
-    fetchEmployeesSuccess: (state, action) => {
-      state.list = action.payload;
-      state.loading = false;
-      state.error = null;
+    punchOut: (state, action) => {
+      const { userId } = action.payload;
+      state.punchStatus = 'punchedOut';
+      localStorage.setItem(`punchStatus_${userId}`, 'punchedOut');
     },
-    fetchEmployeesFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    addEmployee: (state, action) => {
-      state.list.push(action.payload);
-    },
-    updateEmployee: (state, action) => {
-      const index = state.list.findIndex((emp) => emp.id === action.payload.id);
-      if (index !== -1) {
-        state.list[index] = action.payload;
+    resetPunchStatus: (state, action) => {
+      const { userId } = action.payload;
+      const today = new Date().toDateString();
+      if (state.lastPunchInDate !== today) {
+        state.punchStatus = null;
+        state.lastPunchInDate = null;
+        localStorage.removeItem(`punchStatus_${userId}`);
+        localStorage.removeItem(`lastPunchInDate_${userId}`);
       }
     },
-    deleteEmployee: (state, action) => {
-      state.list = state.list.filter((emp) => emp.id !== action.payload);
+    loadPunchStatus: (state, action) => {
+      const { userId } = action.payload;
+      state.punchStatus = localStorage.getItem(`punchStatus_${userId}`) || null;
+      state.lastPunchInDate = localStorage.getItem(`lastPunchInDate_${userId}`) || null;
     },
   },
 });
 
-export const {
-  fetchEmployeesStart,
-  fetchEmployeesSuccess,
-  fetchEmployeesFailure,
-  addEmployee,
-  updateEmployee,
-  deleteEmployee,
-} = employeeSlice.actions;
-
+export const { punchIn, punchOut, resetPunchStatus, loadPunchStatus } = employeeSlice.actions;
 export default employeeSlice.reducer;

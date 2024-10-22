@@ -4,11 +4,13 @@ import {store} from './redux/store'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
+import Employeedashboard from './Components/employeepages/Employeedashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <App />
+  
   </Provider>
 );
 

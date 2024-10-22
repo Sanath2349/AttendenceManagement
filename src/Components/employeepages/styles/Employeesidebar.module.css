@@ -35,4 +35,18 @@
     font-weight: 500;
     margin: 8px 0;
   }
+
+  .links ul li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    
+  }
+  
+  .links ul li.active {
+    background-color: #252424;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+  }
   

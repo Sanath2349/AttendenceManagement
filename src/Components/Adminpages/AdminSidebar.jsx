@@ -22,7 +22,7 @@ const AdminSidebar = () => {
             Dashboard
           </li>
           <li 
-            onClick={() => navigate("/employeeoverview")}
+            onClick={() => navigate("/admindashboard")}
             className={isActive("/employeeoverview") ? styles.active : ""}
           >
             Employees overview

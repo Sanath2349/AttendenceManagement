@@ -11,34 +11,24 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.currentUser = action.payload;
+      const { headers, ...serializedData } = action.payload;
+      state.currentUser = serializedData.data || serializedData;
+      // state.currentUser = action.payload;
       state.isAuthenticated = true;
       state.error = null;
     },
     loginFailure: (state, action) => {
       state.error = action.payload;
+      state.isAuthenticated = false;
+      state.currentUser = null;
     },
     logout: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
       state.error = null;
     },
-    registerSuccess: (state, action) => {
-      state.currentUser = action.payload;
-      state.isAuthenticated = true;
-      state.error = null;
-    },
-    registerFailure: (state, action) => {
-      state.error = action.payload;
-    },
   },
 });
 
-export const {
-  loginSuccess,
-  loginFailure,
-  logout,
-  registerSuccess,
-  registerFailure,
-} = userSlice.actions;
+export const { loginSuccess, loginFailure, logout } = userSlice.actions;
 export default userSlice.reducer;
