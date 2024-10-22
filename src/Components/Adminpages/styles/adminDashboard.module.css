@@ -1,6 +1,6 @@
 .AdminDashboard {
   background-color: #e9eff5;
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   gap: 20px;
 }
@@ -60,6 +60,7 @@
   border-radius: 8px;
   padding: 20px;
   margin-top: 20px;
+  width: 80vw;
 }
 
 .tableHeader {
@@ -102,17 +103,21 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 8px;
+  box-shadow: 2px 2px 10px black;
 }
 
 .attendanceTable th,
 .attendanceTable td {
-  padding: 12px;
+  padding: 12px ;
   text-align: left;
+  font-weight: 600;
 }
 
 .attendanceTable th {
   color: #6b7280;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 25px;
+  color: #001d3d;
 }
 
 .status {

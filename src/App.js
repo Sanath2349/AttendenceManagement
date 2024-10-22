@@ -11,6 +11,7 @@ import Employeepunchout from "./Components/employeepages/Employeepunchout";
 import Employeeoverview from "./Components/employeepages/Employeeoverview";
 import ProtectedEmployeeRoute from "./Routes/ProtectedEmployeeRoute ";
 import ProtectedAdminRoute from "./Routes/ProtectedAdminRoute";
+import PunchingDetails from "./Components/Adminpages/PunchingDetails/PunchingDetails";
 function App() {
   return (
     <BrowserRouter>
@@ -22,16 +23,17 @@ function App() {
         {/* admin routes */}
         <Route
           path="/admindashboard"
-          element={<ProtectedAdminRoute element={<AdminDashboard />} />}
+          element={<ProtectedAdminRoute element={<EmployeesOverview />} />}
         />
         <Route
           path="/attendanceoverview"
-          element={<ProtectedAdminRoute element={<EmployeesOverview />} />}
+          element={<ProtectedAdminRoute element={<AdminDashboard />} />}
+        />
+        <Route
+          path="/punchingdetails"
+          element={<ProtectedAdminRoute element={<PunchingDetails />} />}
         />
 
-
-
-        
         {/* Employee routes - protected */}
         <Route
           path="/employeedashboard"
