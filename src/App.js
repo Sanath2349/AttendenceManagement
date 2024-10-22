@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadPunchStatus } from "./redux/slices/employeeSlice";
 import { useEffect } from "react";
 
+import PunchingDetails from "./Components/Adminpages/PunchingDetails/PunchingDetails";
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -34,11 +35,15 @@ function App() {
         {/* admin routes */}
         <Route
           path="/admindashboard"
-          element={<ProtectedAdminRoute element={<AdminDashboard />} />}
+          element={<ProtectedAdminRoute element={<EmployeesOverview />} />}
         />
         <Route
           path="/attendanceoverview"
-          element={<ProtectedAdminRoute element={<EmployeesOverview />} />}
+          element={<ProtectedAdminRoute element={<AdminDashboard />} />}
+        />
+        <Route
+          path="/punchingdetails"
+          element={<ProtectedAdminRoute element={<PunchingDetails />} />}
         />
 
         {/* Employee routes - protected */}

@@ -25,13 +25,20 @@ const AdminSidebar = () => {
             onClick={() => navigate("/admindashboard")}
             className={isActive("/employeeoverview") ? styles.active : ""}
           >
-            Employees overview
+           
+            Attendance overview
           </li>
           <li 
             onClick={() => navigate("/attendanceoverview")}
             className={isActive("/attendanceoverview") ? styles.active : ""}
           >
-            Attendance overview
+            Employees overview
+          </li>
+          <li 
+            onClick={() => navigate("/punchingdetails")}
+            className={isActive("/punchingdetails") ? styles.active : ""}
+          >
+            Punching Details
           </li>
         </ul>
       </div>

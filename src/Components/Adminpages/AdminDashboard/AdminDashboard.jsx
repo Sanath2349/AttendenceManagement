@@ -9,9 +9,13 @@ import axios from "axios";
 
 const AdminDashboard = () => {
   const [empData, setEmpData] = useState([]);
- 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    fetchEmployees();
+  }, []);
+
+  const fetchEmployees = () => {
     axios
       .get("http://52.7.177.12:8000/get all users")
       .then((res) => {
@@ -21,12 +25,32 @@ const AdminDashboard = () => {
       .catch((e) => {
         console.error("error fetch employees", e);
       });
-  }, []);
+  };
 
+  const toggleStatus = async (employeeId, currentStatus) => {
+    setLoading(true);
+    const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
 
- const toggleStatus = ()=>{
+    try {
+      // Use newStatus in the API request
+      await axios.patch(
+        `http://52.7.177.12:8000/update_status?userid=${employeeId}&status=${newStatus}`
+      );
 
- }
+      // Update local state after successful API call
+      setEmpData((prevData) =>
+        prevData.map((emp) =>
+          emp.employee_id === employeeId ? { ...emp, status: newStatus } : emp
+        )
+      );
+      console.log("success");
+    } catch (error) {
+      console.error("Error updating status:", error);
+      alert("Failed to update status. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.AdminDashboard}>
@@ -34,7 +58,7 @@ const AdminDashboard = () => {
         <AdminSidebar />
       </div>
       <div className={styles.dashboardContainer}>
-        <div className={styles.dashboardBoxes}>
+        {/* <div className={styles.dashboardBoxes}>
           <div className={styles.box}>
             <div className={styles.empcount}>
               <span>{empData.length}</span>
@@ -63,7 +87,7 @@ const AdminDashboard = () => {
             </div>
             <h3>Absent</h3>
           </div>
-        </div>
+        </div> */}
         <div className={styles.adminTable}>
           <div className={styles.tableHeader}>
             <h2>Employee Overview</h2>
@@ -89,27 +113,38 @@ const AdminDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {empData.map((emp) => (
-                <tr key={emp.employee_id}>
-                  <td>{emp.employee_id}</td>
-                  <td>{emp.name}</td>
-                  <td>{emp.Domain}</td>
-                  <td>{emp.creation_date_time}</td>
-                  <td>{emp.status}</td>
-                  <td>
-                    <label className={styles.switch}>
-                      <input
-                        type="checkbox"
-                        checked={emp.status === "Active"}
-                        onChange={() => toggleStatus(emp.id)}
-                      />
-                      <span className={styles.slider}></span>
-                    </label>
-                  </td>
-                </tr>
-              ))}
+              {empData.map((emp) => {
+                // Create a new Date object from the API's creation_date_time
+                const creationDate = new Date(
+                  emp.creation_date_time
+                ).toLocaleDateString();
+
+                return (
+                  <tr key={emp.employee_id}>
+                    <td>{emp.employee_id}</td>
+                    <td>{emp.name}</td>
+                    <td>{emp.Domain}</td>
+                    <td>{creationDate}</td> {/* Only display the date */}
+                    <td>{emp.status}</td>
+                    <td>
+                      <label className={styles.switch}>
+                        <input
+                          type="checkbox"
+                          checked={emp.status === "Active"}
+                          onChange={() =>
+                            toggleStatus(emp.employee_id, emp.status)
+                          }
+                          disabled={loading}
+                        />
+                        <span className={styles.slider}></span>
+                      </label>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+
           <div className={styles.pagination}>Page 1 of 100</div>
         </div>
       </div>
